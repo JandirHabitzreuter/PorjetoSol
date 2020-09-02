@@ -75,7 +75,8 @@ create-Suns 1[
 end
 
 to movePlanets
-  ask Planets [
+
+ask Planets [
     fd translation_velocity * 300
 
     let degress 360 / ((2 * pi * sun_distance) / translation_velocity)

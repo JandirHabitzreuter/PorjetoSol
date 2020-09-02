@@ -75,6 +75,7 @@ create-Suns 1[
 end
 
 to movePlanets
+  ;Mover os planetas
   ask Planets [
     fd translation_velocity * 300
 
