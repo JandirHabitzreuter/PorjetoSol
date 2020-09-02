@@ -51,7 +51,6 @@ to configurePlanet
   foreach planets_list [[planetItem] ->
     create-Planets 1 [
       set name item 0 planetItem
-      set label item 0 planetItem
       set sun_distance item 1 planetItem / scale / distance_scale
       set size item 2 planetItem / scale
       set color item 3 planetItem
@@ -80,7 +79,7 @@ GRAPHICS-WINDOW
 -1
 1.0
 1
-2
+10
 1
 1
 1
