@@ -12,28 +12,29 @@ breed [Planets planet]
 Planets-own [
   name
   sun_distance
+  translation_velocity
 ]
 
 to go
-  ask patches [
-  set pcolor one-of remove 55 base-colors
-  ]
+  ;wait 1
+  movePlanets
+  tick
 end
 
 to setup
   clear-all
   set scale 100000
-  set diameter_earth 12742 / scale
   set diameter_sun 1392700 / scale
-  set planets_list [["Mercúrio" 57910000   4879   48]
-                    ["Vênus"    108200000  12103  9 ]
-                    ["Terra"    149600000  12756  95]
-                    ["Marte"    227940000  6794   15]
-                    ["Júpiter"  778330000  142984 44]
-                    ["Saturno"  1429400000 120536 46]
-                    ["Urano"    2870990000 51118  67]
-                    ["Netuno"   4504300000 49538  86]
-                    ["Plutão"   5922000000 2320   88]];
+  ;Nome do planeta, Distancia do SOL, diametro do planeta, cor, velocidade de tranlacao (KM/s)
+  set planets_list [["Mercúrio" 57910000   4879   48 49]
+                    ["Vênus"    108200000  12103  9  35]
+                    ["Terra"    149600000  12756  95 30]
+                    ["Marte"    227940000  6794   15 24]
+                    ["Júpiter"  778330000  142984 44 13]
+                    ["Saturno"  1429400000 120536 46 10]
+                    ["Urano"    2870990000 51118  67 7]
+                    ["Netuno"   4504300000 49538  86 5]
+                    ["Plutão"   5922000000 2320   88 5]]
   configureSun
   configurePlanet
   configurePatch
@@ -55,7 +56,9 @@ to configurePlanet
       set sun_distance item 1 planetItem / scale / distance_scale
       set size item 2 planetItem / scale
       set color item 3 planetItem
-      setxy ([xcor] of sun 0) - sun_distance world-height / 2
+      set translation_velocity item 4 planetItem / scale / distance_scale
+      setxy ([xcor] of sun 0) ([ycor] of sun 0) + sun_distance
+      set heading 90;
     ]
   ]
 
@@ -69,6 +72,15 @@ create-Suns 1[
     set size (diameter_sun)
   ]
 
+end
+
+to movePlanets
+  ask Planets [
+    fd translation_velocity * 300
+
+    let degress 360 / ((2 * pi * sun_distance) / translation_velocity)
+    set heading (heading + degress * 300)
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -133,15 +145,15 @@ NIL
 1
 
 SLIDER
-9
-62
-181
-95
+12
+63
+184
+96
 distance_scale
 distance_scale
 45
 2000
-95.0
+170.0
 1
 1
 NIL
